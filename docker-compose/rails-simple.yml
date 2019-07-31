@@ -1,0 +1,38 @@
+version: '3'
+services:
+  app:
+    image: fillininc/rails:2.6.3-18.04
+    volumes:
+      - .:/opt/app
+      - bundle:/usr/local/bundle
+    ports:
+      - 3000:3000
+    environment:
+      TZ: Asia/Tokyo
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    volumes:
+      - database:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: app_development
+      TZ: Asia/Tokyo
+  redis:
+    image: redis:5.0
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+    environment:
+      TZ: Asia/Tokyo
+
+volumes:
+  database:
+  redis:
+  bundle:
