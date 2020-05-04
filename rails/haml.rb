@@ -2,7 +2,6 @@
 
 gem 'enumerize'
 gem 'haml-rails'
-gem 'mysql2'
 gem 'rails-i18n'
 gem 'redis-rails'
 gem 'sass-rails'
@@ -39,8 +38,15 @@ gem_group :test do
   gem 'webdrivers'
 end
 
-gsub_file 'Gemfile', /^gem\s+['']coffee-rails[''].*$/, ''
-gsub_file 'Gemfile', /^\s+gem\s+['']chromedriver-helper[''].*$/, ''
+gsub_file 'config/database.yml', /password:\n/, "password: password\n"
+gsub_file 'config/database.yml', /host: localhost/, 'host: db'
+db_config = <<CONF
+  charset: utf8mb4
+  collation: utf8mb4_general_ci
+CONF
+inject_into_file 'config/database.yml', after: "encoding: utf8mb4\n" do
+  db_config
+end
 
 initializer 'generators.rb', <<~CODE
   # frozen_string_literal: true
