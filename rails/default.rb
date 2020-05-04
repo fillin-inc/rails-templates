@@ -43,7 +43,7 @@ end
 gsub_file 'Gemfile', /^gem\s+['']coffee-rails[''].*$/, ''
 gsub_file 'Gemfile', /^\s+gem\s+['']chromedriver-helper[''].*$/, ''
 
-initializer 'generators.rb', <<-CODE
+initializer 'generators.rb', <<~CODE
   # frozen_string_literal: true
 
   Rails.application.config.generators do |g|
@@ -59,7 +59,7 @@ initializer 'generators.rb', <<-CODE
   end
 CODE
 
-initializer 'bullet.rb', <<-CODE
+initializer 'bullet.rb', <<~CODE
   # frozen_string_literal: true
 
   if Rails.env.development?
@@ -72,14 +72,14 @@ initializer 'bullet.rb', <<-CODE
   end
 CODE
 
-initializer 'sass.rb', <<-CODE
+initializer 'sass.rb', <<~CODE
   # frozen_string_literal: true
 
   Rails.application.config.sass.preferred_syntax = :sass
 CODE
 
 file 'config/locales/.keep'
-initializer 'locale.rb', <<-CODE
+initializer 'locale.rb', <<~CODE
   # frozen_string_literal: true
 
   Rails.application.config.i18n do |i18n|
@@ -89,13 +89,13 @@ initializer 'locale.rb', <<-CODE
   end
 CODE
 
-initializer 'rack_lineprof.rb', <<-CODE
+initializer 'rack_lineprof.rb', <<~CODE
   # frozen_string_literal: true
 
   Rails.application.config.middleware.use Rack::Lineprof if Rails.env.development?
 CODE
 
-file '.rubocop.yml', <<-CODE
+file '.rubocop.yml', <<~CODE
   require: rubocop-rails
 
   AllCops:
@@ -146,17 +146,17 @@ file '.rubocop.yml', <<-CODE
     Max: 25
 CODE
 
-file 'db/seeds.rb', <<-CODE
+file 'db/seeds.rb', <<~CODE
   SeedFu.seed
 CODE
 file 'db/fixtures/development/.keep'
 
-file 'app/assets/stylesheets/application.sass', <<-CODE
+file 'app/assets/stylesheets/application.sass', <<~CODE
   @charset 'utf-8'
 CODE
 run 'rm app/assets/stylesheets/application.css'
 
-file 'config/unicorn.rb', <<-CODE
+file 'config/unicorn.rb', <<~'CODE'
   # frozen_string_literal: true
 
   rails_root = File.expand_path('../', __dir__)
@@ -195,7 +195,7 @@ file 'config/unicorn.rb', <<-CODE
 CODE
 
 file 'spec/factories/.keep'
-file 'spec/factories_spec.rb', <<-CODE
+file 'spec/factories_spec.rb', <<~CODE
   # frozen_string_literal: true
 
   require 'rails_helper'
@@ -204,7 +204,7 @@ file 'spec/factories_spec.rb', <<-CODE
     it { FactoryBot.lint traits: true }
   end
 CODE
-file 'spec/support/initializers/factory_bot.rb', <<-CODE
+file 'spec/support/initializers/factory_bot.rb', <<~CODE
   # frozen_string_literal: true
 
   RSpec.configure do |config|
@@ -212,7 +212,7 @@ file 'spec/support/initializers/factory_bot.rb', <<-CODE
   end
 CODE
 
-file 'spec/support/initializers/capybara.rb', <<-CODE
+file 'spec/support/initializers/capybara.rb', <<~CODE
   # frozen_string_literal: true
 
   # for Docker
@@ -241,7 +241,4 @@ after_bundle do
   generate 'rspec:install'
   run 'bundle exec erb2slim app/views app/views -d'
   run 'bundle exec rubocop --auto-gen-config'
-  run 'bundle exec spring binstub rspec'
-  run 'bundle exec spring binstub rubocop'
-  run 'bin/spring stop'
 end
