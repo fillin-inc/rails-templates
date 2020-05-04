@@ -156,6 +156,44 @@ file 'app/assets/stylesheets/application.sass', <<-CODE
 CODE
 run 'rm app/assets/stylesheets/application.css'
 
+file 'config/unicorn.rb', <<-CODE
+  # frozen_string_literal: true
+
+  rails_root = File.expand_path('../', __dir__)
+
+  ENV['BUNDLE_GEMFILE'] = "#{rails_root}/Gemfile"
+
+  worker_processes 2
+  working_directory rails_root
+
+  timeout 60
+
+  listen "#{rails_root}/tmp/sockets/unicorn.sock"
+  pid "#{rails_root}/tmp/pids/unicorn.pid"
+
+  stderr_path "#{rails_root}/log/unicorn_error.log"
+  stdout_path "#{rails_root}/log/unicorn.log"
+
+  preload_app true
+
+  before_fork do |server, worker|
+    defined?(ActiveRecord::Base) && ActiveRecord::Base.connection.disconnect!
+
+    old_pid = "#{server.config[:pid]}.oldbin"
+    if old_pid != server.pid
+      begin
+        sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+        Process.kill(sig, File.read(old_pid).to_i)
+      rescue Errno::ENOENT, Errno::ESRCH # rubocop:disable Lint/SuppressedException
+      end
+    end
+  end
+
+  after_fork do |_server, _worker|
+    defined?(ActiveRecord::Base) && ActiveRecord::Base.establish_connection
+  end
+CODE
+
 after_bundle do
   generate 'annotate:install'
   generate 'rspec:install'
