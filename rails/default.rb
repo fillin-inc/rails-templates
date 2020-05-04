@@ -2,8 +2,12 @@
 
 gem 'enumerize'
 gem 'mysql2'
+gem 'rails-i18n'
 gem 'redis-rails'
+gem 'sass-rails'
+gem 'seed-fu'
 gem 'slim-rails'
+gem 'unicorn'
 
 gem_group :development, :test do
   gem 'factory_bot_rails'
@@ -20,12 +24,18 @@ gem_group :development do
   gem 'capistrano', require: false
   gem 'capistrano-rails', require: false
   gem 'html2slim', require: false
+  gem 'rack-lineprof'
+  gem 'rack-mini-profiler'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'spring-commands-rubocop'
 end
 
 gem_group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'fakeredis'
+  gem 'puma' # for capybara
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
