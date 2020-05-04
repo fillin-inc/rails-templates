@@ -194,6 +194,48 @@ file 'config/unicorn.rb', <<-CODE
   end
 CODE
 
+file 'spec/factories/.keep'
+file 'spec/factories_spec.rb', <<-CODE
+  # frozen_string_literal: true
+
+  require 'rails_helper'
+
+  describe FactoryBot do
+    it { FactoryBot.lint traits: true }
+  end
+CODE
+file 'spec/support/initializers/factory_bot.rb', <<-CODE
+  # frozen_string_literal: true
+
+  RSpec.configure do |config|
+    config.include FactoryBot::Syntax::Methods
+  end
+CODE
+
+file 'spec/support/initializers/capybara.rb', <<-CODE
+  # frozen_string_literal: true
+
+  # for Docker
+  Capybara.register_driver :headless_chrome do |app|
+    options = ::Selenium::WebDriver::Chrome::Options.new.tap do |opts|
+      opts.args << '--headless'
+      opts.args << '--disable-gpu'
+      opts.args << '--no-sandbox'
+    end
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
+
+  RSpec.configure do |config|
+    config.before(:each, type: :system) do
+      driven_by :rack_test
+    end
+
+    config.before(:each, type: :system, js: true) do
+      driven_by :headless_chrome
+    end
+  end
+CODE
+
 after_bundle do
   generate 'annotate:install'
   generate 'rspec:install'
