@@ -151,6 +151,11 @@ file 'db/seeds.rb', <<-CODE
 CODE
 file 'db/fixtures/development/.keep'
 
+file 'app/assets/stylesheets/application.sass', <<-CODE
+  @charset 'utf-8'
+CODE
+run 'rm app/assets/stylesheets/application.css'
+
 after_bundle do
   generate 'annotate:install'
   generate 'rspec:install'
