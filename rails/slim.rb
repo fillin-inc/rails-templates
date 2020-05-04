@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 gem 'enumerize'
-gem 'haml-rails'
 gem 'mysql2'
 gem 'rails-i18n'
 gem 'redis-rails'
 gem 'sass-rails'
 gem 'seed-fu'
+gem 'slim-rails'
 gem 'unicorn'
 
 gem_group :development, :test do
@@ -14,11 +14,6 @@ gem_group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop-rails'
-  gem 'rack-lineprof'
-  gem 'rack-mini-profiler'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-commands-rubocop'
 end
 
 gem_group :development do
@@ -28,6 +23,12 @@ gem_group :development do
   gem 'bullet'
   gem 'capistrano', require: false
   gem 'capistrano-rails', require: false
+  gem 'html2slim', require: false
+  gem 'rack-lineprof'
+  gem 'rack-mini-profiler'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'spring-commands-rubocop'
 end
 
 gem_group :test do
@@ -50,7 +51,7 @@ initializer 'generators.rb', <<~CODE
     g.factory_bot dir: 'spec/factories'
     g.helper false
     g.jbuilder false
-    g.template_engine = :haml
+    g.template_engine = :slim
     g.test_framework :rspec,
                      controller_specs: false,
                      view_specs: false,
@@ -61,11 +62,13 @@ CODE
 initializer 'bullet.rb', <<~CODE
   # frozen_string_literal: true
 
-  Rails.application.config.after_initialize do
-    Bullet.enable        = true
-    Bullet.console       = true
-    Bullet.rails_logger  = true
-    Bullet.bullet_logger = false
+  if Rails.env.development?
+    Rails.application.config.after_initialize do
+      Bullet.enable        = true
+      Bullet.console       = true
+      Bullet.rails_logger  = true
+      Bullet.bullet_logger = false
+    end
   end
 CODE
 
@@ -298,7 +301,7 @@ file 'ib/tasks/auto_annotate_models.rake', <<~CODE
 CODE
 
 after_bundle do
-  rails_command 'haml:erb2haml'
   generate 'rspec:install'
+  run 'bundle exec erb2slim app/views app/views -d'
   run 'bundle exec rubocop --auto-gen-config'
 end
