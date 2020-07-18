@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: fillininc/rails:2.6.5-18.04
+    image: fillininc/rails:2.7.1-20.04
     volumes:
       - .:/opt/app
       - bundle:/usr/local/bundle
