@@ -239,7 +239,7 @@ file 'spec/support/initializers/capybara.rb', <<~CODE
   end
 CODE
 
-file 'ib/tasks/auto_annotate_models.rake', <<~CODE
+file 'lib/tasks/auto_annotate_models.rake', <<~CODE
   # frozen_string_literal: true
 
   # NOTE: only doing this in development as some production environments (Heroku)
