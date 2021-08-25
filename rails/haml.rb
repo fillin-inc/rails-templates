@@ -13,7 +13,6 @@ gem_group :development, :test do
   gem 'pry-rails'
   gem 'rubocop-rails'
   gem 'rack-lineprof'
-  gem 'rack-mini-profiler'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'

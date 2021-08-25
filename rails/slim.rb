@@ -23,7 +23,6 @@ gem_group :development do
   gem 'capistrano-rails', require: false
   gem 'html2slim', require: false
   gem 'rack-lineprof'
-  gem 'rack-mini-profiler'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'
