@@ -32,7 +32,6 @@ end
 gem_group :test do
   gem 'capybara'
   gem 'fakeredis'
-  gem 'puma' # for capybara
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
