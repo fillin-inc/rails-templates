@@ -85,7 +85,7 @@ initializer 'locale.rb', <<~CODE
   Rails.application.config.i18n do |i18n|
     i18n.default_locale = :ja
     i18n.available_locales = [:ja, :en]
-    i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
+    i18n.load_path += Dir[Rails.root.join('config/locales/**/*.yml').to_s]
   end
 CODE
 
@@ -99,6 +99,7 @@ file '.rubocop.yml', <<~CODE
   require: rubocop-rails
 
   AllCops:
+    NewCops: enable
     Exclude:
       - 'db/**/*'
       - 'vendor/**/*'
