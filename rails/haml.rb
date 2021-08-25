@@ -4,7 +4,6 @@ gem 'enumerize'
 gem 'haml-rails'
 gem 'rails-i18n'
 gem 'redis-rails'
-gem 'sass-rails'
 gem 'seed-fu'
 gem 'unicorn'
 

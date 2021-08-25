@@ -3,7 +3,6 @@
 gem 'enumerize'
 gem 'rails-i18n'
 gem 'redis-rails'
-gem 'sass-rails'
 gem 'seed-fu'
 gem 'slim-rails'
 gem 'unicorn'
