@@ -12,6 +12,11 @@ gem_group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'rack-lineprof'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'spring-commands-rubocop'
 end
 
 gem_group :development do
@@ -22,10 +27,6 @@ gem_group :development do
   gem 'capistrano', require: false
   gem 'capistrano-rails', require: false
   gem 'html2slim', require: false
-  gem 'rack-lineprof'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-commands-rubocop'
 end
 
 gem_group :test do

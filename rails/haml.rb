@@ -12,6 +12,7 @@ gem_group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
   gem 'rack-lineprof'
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -64,11 +65,13 @@ CODE
 initializer 'bullet.rb', <<~CODE
   # frozen_string_literal: true
 
-  Rails.application.config.after_initialize do
-    Bullet.enable        = true
-    Bullet.console       = true
-    Bullet.rails_logger  = true
-    Bullet.bullet_logger = false
+  if Rails.env.development?
+    Rails.application.config.after_initialize do
+      Bullet.enable        = true
+      Bullet.console       = true
+      Bullet.rails_logger  = true
+      Bullet.bullet_logger = false
+    end
   end
 CODE
 
