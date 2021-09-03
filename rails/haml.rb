@@ -130,7 +130,7 @@ file '.rubocop.yml', <<~CODE
   Style/TrailingCommaInHashLiteral:
     EnforcedStyleForMultiline: comma
 
-  Metrics/LineLength:
+  Layout/LineLength:
     Max: 120
     Exclude:
       - 'app/views/**/*'
