@@ -13,8 +13,6 @@ gem_group :development, :test do
   gem 'rubocop-rspec'
   gem 'rack-lineprof'
   gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-commands-rubocop'
 end
 
 gem_group :development do
@@ -256,3 +254,9 @@ file 'lib/tasks/auto_annotate_models.rake', <<~CODE
     Annotate.load_tasks
   end
 CODE
+
+after_bundle do
+  generate 'rspec:install'
+  run 'bundle exec rubocop --auto-gen-config'
+  run 'bundle exec spring binstub --all'
+end
